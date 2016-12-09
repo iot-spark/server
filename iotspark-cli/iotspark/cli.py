@@ -2,11 +2,10 @@ import sys
 import argparse
 import logging
 
-from commands import init_sub_commands
+from iotspark.utils.log import SLogger
+from iotspark.commands import Command
 
 from subprocess import list2cmdline
-
-from iotspark.utils.log import SLogger
 
 SLogger('iotspark').set()
 logger = logging.getLogger(__name__)
@@ -42,22 +41,18 @@ def create_cli_args():
     sub_parser = parser.add_subparsers(title='Commands')
 
     # init sub commands
-    init_sub_commands(sub_parser)
+    Command.init_sub_commands(sub_parser)
 
     return parser.parse_args()
 
 
-def _init_command():
-    create_cli_args()
-
-
 def main():
     try:
-        _init_command()
+        args = create_cli_args()
+        Command.init(args.which)
 
         # Logging input cmd
         logger.debug('Command: %s', list2cmdline(sys.argv))
-        logger.info("Preparing to install ...")
     except Exception as e:
         logger.error("%s", e)
         return 1
