@@ -3,5 +3,7 @@ python:
   - "2.7"
   - "3.4"
   - "pypy"
-install: "pip install iotspark"
-script: "python setup.py nosetests"
+before_install:
+  - "pip install coverage"
+install: "pip install -e iotspark-cli"
+script: "./iotspark/run_tests"
