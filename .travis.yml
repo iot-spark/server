@@ -6,4 +6,4 @@ python:
 before_install:
   - "pip install coverage"
 install: "pip install -e iotspark-cli"
-script: "cd ./run_tests"
+script: "cd iotspark-cli && ./run_tests"
